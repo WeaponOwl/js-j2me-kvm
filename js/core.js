@@ -45,6 +45,23 @@ if (window.jQuery === undefined) jQuery = $ = {};
 			return byte4 * 16777216 + byte3 * 65536 + byte2 * 256 + byte1;
 		},
 
+		decompress: function(data, method)
+		{
+			if(method == 0)
+			{
+				return data;
+			}
+
+			// deflate
+			if(method == 8)
+			{
+				return data;
+			}
+
+			console.log('uknown compress method: '+method);
+			return data;
+		},
+
 		loadJar: function(base64Blob)
 		{
 			this.bytes = Base64Binary.decode(base64Blob); 
@@ -74,6 +91,7 @@ if (window.jQuery === undefined) jQuery = $ = {};
 
 					compressedFile.name = compressedFile.header.fileName;
 					compressedFile.compressedData = this.readBytes(compressedFile.header.compressedSize);
+					compressedFile.uncompressedData = this.decompress(compressedFile.compressedData, compressedFile.header.compressMethod);
 
 					this.files[compressedFile.header.fileName] = compressedFile;
 				}
