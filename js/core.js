@@ -4,6 +4,80 @@ if (window.jQuery === undefined) jQuery = $ = {};
 
 !function($, window, document)
 {
+	Kvm.Deflate = {
+		bytes: [],
+		position: 0,
+
+		readByte: function() {
+			var byte = this.bytes[this.position++];
+			return byte;
+		},
+
+		readBytes: function(count) {
+			var bytes = [];
+			for(var i=0;i<count;i++)
+				bytes.push(this.bytes[this.position++]);
+			return bytes;
+		},
+
+		readShort: function() {
+			var byte1 = this.bytes[this.position++];
+			var byte2 = this.bytes[this.position++];
+			return byte2 * 256 + byte1;
+		},
+
+		readBitFromByte: function(byte, bitOffcet) {
+			var bytes = [];
+			var log = "";
+
+			for (var i = 0; i < 8; i++)
+			{
+				bytes[i] = (byte >> i) & 1;
+				log+=bytes[i];
+			}
+
+			return bytes[bitOffcet];
+		},
+
+		decompress: function(data)
+		{
+			this.bytes = data;
+			this.position = 0;
+
+			var uncomressed = [];
+
+			var headerByte = this.readByte();
+			var endBlock = this.readBitFromByte(headerByte, 0);
+
+			var blockType1 = this.readBitFromByte(headerByte, 1);
+			var blockType2 = this.readBitFromByte(headerByte, 2);
+			var blockType = blockType1 * 2 + blockType2;
+
+			if(blockType == 3)
+			{
+				console.log('error in compressed data');
+				return data;
+			}
+
+			if(blockType == 0)
+			{
+				// i not sure it work right...
+				var blockLength = this.readShort();
+				uncomressed = uncomressed.concat(this.readBytes(blockLength));
+			}
+			else if(blockType == 1)
+			{
+				 console.log('static code');
+			}
+			else if(blockType == 2)
+			{
+				 console.log('dynamic code');
+			}
+
+			return data;
+		}
+	};
+
 	Kvm.Loader = {
 		bytes: [],
 		position: 0,
@@ -52,10 +126,9 @@ if (window.jQuery === undefined) jQuery = $ = {};
 				return data;
 			}
 
-			// deflate
 			if(method == 8)
 			{
-				return data;
+				return Kvm.Deflate.decompress(data);
 			}
 
 			console.log('uknown compress method: '+method);
