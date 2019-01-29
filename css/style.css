@@ -1,23 +1,25 @@
 body{
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  font-family: "HEAVITAS", "Helvetica Rounded", Arial, sans-serif;
   height: 100vh;
   width: 100vw;
   margin:0;
   background:#181D26;
 }
 
-.brand {
-  
+.content{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0;
+}
+
+.content .brand {
   width: 200px;
   height: 200px;
   position: relative;
   margin: 0 auto;
-  
 }
-.brand:before {
-  
+.content .brand:before {
   background-size: 100% 100%;
   content: "JAR";
   line-height: 205px;
@@ -30,11 +32,9 @@ body{
   height: 200px;
   margin: 0 auto;
   position: absolute;
-  
-  z-index: 99999 !important;
 }
 
-.logo{
+.content .logo{
   animation: 5s linear infinite;
   animation-name: rotate-0;
   animation-delay: 0s;
@@ -43,9 +43,8 @@ body{
   
 }
 
-
-svg path{
-  positon:absolute;
+.content svg path{
+  position:absolute;
   fill:none;
   stroke-width:2;
   top:0;
@@ -56,31 +55,26 @@ svg path{
   animation: 4s linear infinite;
 }
 
-.logo svg path:nth-child(1) {
+.content .logo svg path:nth-child(1) {
   opacity: 1;
   animation-name: rotate-1;
   animation-delay: .5s;
 }
-.logo svg path:nth-child(2) {
+.content .logo svg path:nth-child(2) {
   opacity: .5;
   animation-name: rotate-2;
   animation-delay: .6s;
 }
-.logo svg path:nth-child(3) {
+.content .logo svg path:nth-child(3) {
   opacity: .8;
   animation-name: rotate-3;
   animation-delay: .7s;
 }
 
-
 @keyframes scale-1 {
-  0%{
-    transform: scale(1);
-  }50% {
-    transform: scale(.9);
-  }100% {
-    transform: scale(1);
-  } 
+  0% { transform: scale(1); }
+  50% { transform: scale(.9); }
+  100% { transform: scale(1); } 
 }
 
 @keyframes rotate-0 {
@@ -101,4 +95,108 @@ svg path{
 @keyframes rotate-3 {
   from { transform: rotate(0deg); }
     to { transform: rotate(0deg); }
+}
+
+/*-----------------------*/
+
+.header {
+  padding: 1rem;
+  background: #111015;
+  color: #57577f;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+.header svg {
+  color: #a26039;
+}
+
+.header .details, .header .details svg {
+  color: #282532;
+  cursor: pointer;
+  transition: .3s ease-out;
+}
+
+.details-close{
+  cursor: pointer;
+}
+
+.header .details .close {
+  opacity: 0;
+}
+.header .details.active, .header .details.active svg {
+  color: #ff004e;
+}
+.header .details.active .close {
+  opacity: 1;
+}
+
+/* panel layout mechanics */
+.details-wrap {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 30em;
+  max-height: 100%;
+  overflow: auto;
+}
+.details-panel {
+  position: relative;
+  display: block;
+  background: #12161e;
+  color: #999;
+  overflow: auto;
+  padding: 1em;
+  font-size: 0.8rem;
+}
+.details-panel .tab{
+  margin-right: 1rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #999;
+  display: inline-block;
+}
+.details-panel .tab.active{
+  border-bottom: 1px solid #ff004e;
+}
+.details-tabs{
+  height: 3em;
+}
+.details-tabs-content .tabContent{
+  display: none;
+}
+.details-tabs-content .tabContent.active{
+  display: block;
+}
+.details-tabs-content .tabContent .line{
+  display: block;
+  line-height: 1.1em;
+}
+.details-tabs-content .tabContent .line.debug{
+  color: #edac72;
+}
+.details-tabs-content .tabContent .line.info{
+  color: #808ff1;
+}
+.details-tabs-content .tabContent .line.error{
+  color: red;
+}
+.details-tabs-content .tabContent .line.debugInfo{
+  color: #ffa900;
+}
+.details-tabs-content .tabContent .line.jump{
+  color: #a78b52;
+  cursor: pointer;
+}
+.details-tabs-content .tabContent .line .lineNumber{
+  font-weight: 400;
+  min-width: 3em;
+  padding-right: 0.5em;
+  display: inline-block;
+  color: #edc472;
+}
+.details-tabs-content .tabContent .line .lineValue{
+  color: #a78b52;
+  margin-left: 0.5em;
 }

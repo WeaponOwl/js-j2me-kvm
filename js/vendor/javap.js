@@ -1377,14 +1377,14 @@ if (typeof JVM === 'undefined') {
 
         for(var k=0;k<npairs;k++)
         {
-            operand.push(code[defaultByteIndex+7+k*8+0]);
-            operand.push(code[defaultByteIndex+7+k*8+1]);
-            operand.push(code[defaultByteIndex+7+k*8+2]);
-            operand.push(code[defaultByteIndex+7+k*8+3]);
-            operand.push(code[defaultByteIndex+7+k*8+4]);
-            operand.push(code[defaultByteIndex+7+k*8+5]);
-            operand.push(code[defaultByteIndex+7+k*8+6]);
-            operand.push(code[defaultByteIndex+7+k*8+7]);
+            operand.push(code[defaultByteIndex+8+k*8+0]);
+            operand.push(code[defaultByteIndex+8+k*8+1]);
+            operand.push(code[defaultByteIndex+8+k*8+2]);
+            operand.push(code[defaultByteIndex+8+k*8+3]);
+            operand.push(code[defaultByteIndex+8+k*8+4]);
+            operand.push(code[defaultByteIndex+8+k*8+5]);
+            operand.push(code[defaultByteIndex+8+k*8+6]);
+            operand.push(code[defaultByteIndex+8+k*8+7]);
         }
 
         //len = defaultByteIndex + (2 + npairs * 2) * 4 - index + 1;
